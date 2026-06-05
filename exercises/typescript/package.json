@@ -1,0 +1,20 @@
+{
+  "name": "xrpl-academy-exercises",
+  "version": "1.0.0",
+  "description": "XRPL Academy Training Exercises - June 5, 2026",
+  "scripts": {
+    "day1": "ts-node day1-send-xrp.ts",
+    "homework": "ts-node homework-nft.ts",
+    "step1": "ts-node day2-step1-setup-account.ts",
+    "step2": "ts-node day2-step2-issue-token.ts",
+    "step3": "ts-node day2-step3-create-amm.ts"
+  },
+  "dependencies": {
+    "xrpl": "^3.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "ts-node": "^10.9.0",
+    "@types/node": "^20.0.0"
+  }
+}

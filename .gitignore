@@ -1,0 +1,16 @@
+# JavaScript / TypeScript
+node_modules/
+dist/
+*.js.map
+
+# Generated files
+wallets.json
+
+# Environment
+*.env
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db

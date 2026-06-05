@@ -1,0 +1,83 @@
+// ============================================================
+// Day 2 - Step 3 Exercise: Create an AMM Pool
+// Learn: How to create an Automated Market Maker (AMM) pool
+// that pairs your custom token with XRP.
+//
+// PREREQUISITE: Run step1 (Default Ripple) and step2 (issue
+// tokens) first! The issuer needs tokens to deposit into the pool.
+//
+// AMM Concept: An AMM pool holds two assets and allows anyone
+// to swap between them. The TradingFee (in basis points) goes
+// to liquidity providers.
+// Reference materials:
+// - https://learn.xrpl-commons.org/course/deep-dive-into-xrpl-defi/lesson/what-is-an-automated-market-maker-amm/
+// - https://xrpl.org/docs/references/protocol/transactions/types/ammcreate
+// - https://xrpl.org/docs/references/http-websocket-apis/public-api-methods/path-and-order-book-methods/amm_info
+// - https://js.xrpl.org/
+// ============================================================
+
+import * as xrpl from 'xrpl';
+import * as fs from 'fs';
+
+const TESTNET_URL: string = 'wss://s.altnet.rippletest.net:51233';
+
+interface WalletData {
+  address: string;
+  seed: string;
+}
+
+interface WalletsFile {
+  wallets: WalletData[];
+}
+
+async function main(): Promise<void> {
+  const { wallets }: WalletsFile = JSON.parse(fs.readFileSync('../../wallets.json', 'utf-8'));
+  const issuerWallet: xrpl.Wallet = xrpl.Wallet.fromSeed(wallets[0].seed);
+
+  // Must match the currency code from step2
+  const currencyCode: string = 'ACD';
+
+  const client: xrpl.Client = new xrpl.Client(TESTNET_URL);
+  await client.connect();
+  console.log('Connected to XRPL Testnet');
+
+  // ╔══════════════════════════════════════════════════════════════════╗
+  // ║ TODO 1: Create an AMMCreate transaction                         ║
+  // ║                                                                  ║
+  // ║ HINT: const ammCreateTx: xrpl.AMMCreate = {                     ║
+  // ║   TransactionType: 'AMMCreate',                                  ║
+  // ║   Account: issuerWallet.address,                                 ║
+  // ║   Amount: {                                                      ║
+  // ║     currency: currencyCode,                                      ║
+  // ║     issuer: issuerWallet.address,                                ║
+  // ║     value: '100'                                                 ║
+  // ║   },                                                             ║
+  // ║   Amount2: xrpl.xrpToDrops('10'),                                ║
+  // ║   TradingFee: 500                                                ║
+  // ║ }                                                                ║
+  // ║ await client.submitAndWait(ammCreateTx, { wallet: issuerWallet })║
+  // ╚══════════════════════════════════════════════════════════════════╝
+  // YOUR CODE HERE
+
+  console.log('AMM Pool created!');
+
+  // ╔══════════════════════════════════════════════════════════════════╗
+  // ║ TODO 2: Query the AMM info                                      ║
+  // ║                                                                  ║
+  // ║ HINT: const ammInfo = await client.request({                     ║
+  // ║   command: 'amm_info',                                           ║
+  // ║   asset: {                                                       ║
+  // ║     currency: currencyCode,                                      ║
+  // ║     issuer: issuerWallet.address                                 ║
+  // ║   },                                                             ║
+  // ║   asset2: { currency: 'XRP' }                                    ║
+  // ║ });                                                              ║
+  // ║ console.log(JSON.stringify(ammInfo.result, null, 2));             ║
+  // ╚══════════════════════════════════════════════════════════════════╝
+  // YOUR CODE HERE
+
+  console.log(`\nExplorer: https://testnet.xrpl.org/accounts/${issuerWallet.address}`);
+  await client.disconnect();
+}
+
+main().catch(console.error);
