@@ -1,4 +1,4 @@
-# XRPL Developer Training - June 5, 2026
+# XRPL Developer Training - June 22, 2026
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/XRPL-Commons/dev-training-june-2026-ts)
 
